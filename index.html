@@ -1,0 +1,2271 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My Memories</title>
+
+<style>
+/* =========================
+   CÀI ĐẶT CHUNG
+========================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg: #f5f5fa;
+    --card: #ffffff;
+    --text: #20202b;
+    --sub: #77788b;
+    --primary: #7568ff;
+    --primary-dark: #594be8;
+    --border: #e8e8f0;
+    --danger: #ef5368;
+    --shadow: 0 10px 35px rgba(40, 35, 90, 0.08);
+}
+
+body.dark {
+    --bg: #15151d;
+    --card: #20202a;
+    --text: #f5f5f8;
+    --sub: #aaaaba;
+    --border: #343440;
+    --shadow: 0 10px 35px rgba(0,0,0,.3);
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    transition: .25s;
+}
+
+button,
+input,
+textarea,
+select {
+    font-family: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+    height: 70px;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 6%;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.logo {
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.logo span {
+    color: var(--primary);
+}
+
+.header-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.header-btn {
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+
+    padding: 9px 13px;
+    border-radius: 10px;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.container {
+    width: min(1100px, 92%);
+    margin: auto;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    padding: 65px 0 40px;
+
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+
+    gap: 30px;
+}
+
+.hero small {
+    color: var(--primary);
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.hero h1 {
+    font-size: 48px;
+    line-height: 1.05;
+    margin: 12px 0;
+}
+
+.hero h1 span {
+    color: var(--primary);
+}
+
+.hero p {
+    color: var(--sub);
+    line-height: 1.6;
+}
+
+.add-btn {
+    border: none;
+    background: var(--primary);
+    color: white;
+
+    padding: 15px 22px;
+    border-radius: 14px;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    white-space: nowrap;
+}
+
+.add-btn:hover {
+    background: var(--primary-dark);
+}
+
+/* =========================
+   SEARCH
+========================= */
+
+.tools {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.search {
+    flex: 1;
+
+    background: var(--card);
+    border: 1px solid var(--border);
+
+    border-radius: 13px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 14px;
+}
+
+.search span {
+    font-size: 20px;
+}
+
+.search input {
+    border: none;
+    outline: none;
+
+    background: transparent;
+    color: var(--text);
+
+    width: 100%;
+    padding: 13px;
+}
+
+.tools select {
+    width: 170px;
+
+    background: var(--card);
+    color: var(--text);
+
+    border: 1px solid var(--border);
+    border-radius: 13px;
+
+    padding: 12px;
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.stat {
+    background: var(--card);
+    border: 1px solid var(--border);
+
+    padding: 13px 17px;
+
+    border-radius: 13px;
+
+    color: var(--sub);
+    font-size: 13px;
+}
+
+.stat b {
+    color: var(--text);
+    font-size: 18px;
+    margin-right: 5px;
+}
+
+/* =========================
+   MEMORY GRID
+========================= */
+
+.memory-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 20px;
+
+    padding-bottom: 60px;
+}
+
+.memory {
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    box-shadow: var(--shadow);
+
+    transition: .2s;
+}
+
+.memory:hover {
+    transform: translateY(-4px);
+}
+
+/* MEDIA */
+
+.memory-media {
+    height: 220px;
+    background: #ddd;
+
+    position: relative;
+    overflow: hidden;
+}
+
+.memory-media img,
+.memory-media video {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.no-media {
+    width: 100%;
+    height: 100%;
+
+    display: grid;
+    place-items: center;
+
+    font-size: 55px;
+    color: #aaa;
+}
+
+.date {
+    position: absolute;
+
+    top: 12px;
+    left: 12px;
+
+    background: rgba(255,255,255,.9);
+
+    color: #333;
+
+    padding: 7px 9px;
+
+    border-radius: 9px;
+
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* CARD BODY */
+
+.memory-body {
+    padding: 17px;
+}
+
+.memory-body h2 {
+    font-size: 19px;
+    margin-bottom: 7px;
+}
+
+.location {
+    color: var(--sub);
+    font-size: 12px;
+}
+
+.memory-body p {
+    color: var(--sub);
+
+    font-size: 13px;
+    line-height: 1.6;
+
+    margin-top: 12px;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+}
+
+/* TAGS */
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 6px;
+
+    margin-top: 13px;
+}
+
+.tag {
+    background: #eeecff;
+    color: #6155df;
+
+    padding: 5px 8px;
+
+    border-radius: 50px;
+
+    font-size: 11px;
+}
+
+/* FOOTER */
+
+.memory-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 15px;
+
+    color: var(--sub);
+    font-size: 12px;
+}
+
+.actions {
+    display: flex;
+    gap: 7px;
+}
+
+.action {
+    border: none;
+    background: transparent;
+
+    color: var(--primary);
+
+    font-weight: bold;
+}
+
+.action.delete {
+    color: var(--danger);
+}
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.empty-icon {
+    font-size: 60px;
+    margin-bottom: 15px;
+}
+
+.empty p {
+    color: var(--sub);
+    margin: 10px 0 20px;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal-background {
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0,0,0,.55);
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 15px;
+
+    z-index: 100;
+}
+
+.modal-background.show {
+    display: flex;
+}
+
+.modal {
+    width: min(650px, 100%);
+
+    max-height: 92vh;
+
+    overflow-y: auto;
+
+    background: var(--card);
+
+    color: var(--text);
+
+    border-radius: 22px;
+
+    padding: 25px;
+
+    box-shadow: var(--shadow);
+}
+
+.modal-head {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: start;
+
+    margin-bottom: 20px;
+}
+
+.close {
+    border: none;
+
+    background: #eeeef5;
+
+    width: 35px;
+    height: 35px;
+
+    border-radius: 50%;
+
+    font-size: 22px;
+}
+
+label {
+    display: block;
+
+    font-size: 13px;
+    font-weight: bold;
+
+    margin: 15px 0 7px;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+
+    padding: 12px;
+
+    border-radius: 11px;
+
+    border: 1px solid var(--border);
+
+    background: var(--card);
+
+    color: var(--text);
+
+    outline: none;
+}
+
+textarea {
+    resize: vertical;
+}
+
+input:focus,
+textarea:focus {
+    border-color: var(--primary);
+}
+
+.two-columns {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 13px;
+}
+
+.modal-footer {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    margin-top: 22px;
+}
+
+.cancel {
+    border: 1px solid var(--border);
+
+    background: var(--card);
+
+    color: var(--text);
+
+    padding: 11px 17px;
+
+    border-radius: 11px;
+}
+
+.save {
+    border: none;
+
+    background: var(--primary);
+
+    color: white;
+
+    padding: 11px 20px;
+
+    border-radius: 11px;
+
+    font-weight: bold;
+}
+
+/* =========================
+   FILE PREVIEW
+========================= */
+
+.file-preview {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 10px;
+}
+
+.preview {
+    width: 90px;
+    height: 70px;
+
+    object-fit: cover;
+
+    border-radius: 9px;
+
+    background: #222;
+}
+
+/* =========================
+   DETAIL
+========================= */
+
+.detail-content h1 {
+    font-size: 35px;
+
+    margin-bottom: 7px;
+}
+
+.detail-meta {
+    color: var(--sub);
+    font-size: 13px;
+}
+
+.detail-text {
+    white-space: pre-wrap;
+
+    line-height: 1.8;
+
+    margin: 25px 0;
+}
+
+.detail-gallery {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 10px;
+}
+
+.detail-gallery img,
+.detail-gallery video {
+    width: 100%;
+
+    max-height: 500px;
+
+    object-fit: contain;
+
+    background: #111;
+
+    border-radius: 12px;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+#toast-container {
+    position: fixed;
+
+    right: 18px;
+    bottom: 18px;
+
+    z-index: 300;
+}
+
+.toast {
+    background: #222;
+
+    color: white;
+
+    padding: 12px 16px;
+
+    border-radius: 11px;
+
+    margin-top: 8px;
+
+    font-size: 13px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:850px) {
+
+    .memory-grid {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .hero h1 {
+        font-size: 40px;
+    }
+}
+
+@media(max-width:600px) {
+
+    header {
+        padding: 0 15px;
+    }
+
+    .container {
+        width: 94%;
+    }
+
+    .hero {
+        display: block;
+
+        padding-top: 40px;
+    }
+
+    .hero h1 {
+        font-size: 36px;
+    }
+
+    .add-btn {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .tools {
+        display: block;
+    }
+
+    .tools select {
+        width: 100%;
+        margin-top: 8px;
+    }
+
+    .stats {
+        overflow-x: auto;
+    }
+
+    .memory-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .two-columns {
+        grid-template-columns: 1fr;
+    }
+
+    .detail-gallery {
+        grid-template-columns: 1fr;
+    }
+
+    .header-btn {
+        padding: 8px 10px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+    <div class="logo">
+        ✦ <span>My Memories</span>
+    </div>
+
+    <div class="header-buttons">
+
+        <button
+            class="header-btn"
+            onclick="toggleDarkMode()"
+            title="Đổi giao diện">
+            🌙
+        </button>
+
+        <button
+            class="header-btn"
+            onclick="exportData()">
+            💾 Sao lưu
+        </button>
+
+        <button
+            class="header-btn"
+            onclick="document.getElementById('importFile').click()">
+            📂 Khôi phục
+        </button>
+
+        <input
+            id="importFile"
+            type="file"
+            accept=".json"
+            hidden
+            onchange="importData(event)"
+        >
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="hero">
+
+    <div>
+
+        <small>
+            YOUR MEMORY SPACE
+        </small>
+
+        <h1>
+            Lưu lại hôm nay,<br>
+            <span>để nhớ về ngày mai.</span>
+        </h1>
+
+        <p>
+            Nhật ký, hình ảnh và video của bạn —
+            tất cả ở một nơi.
+        </p>
+
+    </div>
+
+    <button
+        class="add-btn"
+        onclick="openCreate()">
+
+        ＋ Tạo kỷ niệm
+
+    </button>
+
+</section>
+
+
+<!-- =========================
+     SEARCH
+========================= -->
+
+<section class="tools">
+
+    <div class="search">
+
+        <span>⌕</span>
+
+        <input
+            id="search"
+            placeholder="Tìm kiếm kỷ niệm..."
+            oninput="renderMemories()"
+        >
+
+    </div>
+
+    <select
+        id="sort"
+        onchange="renderMemories()">
+
+        <option value="new">
+            Mới nhất
+        </option>
+
+        <option value="old">
+            Cũ nhất
+        </option>
+
+    </select>
+
+</section>
+
+
+<!-- =========================
+     STATS
+========================= -->
+
+<div
+    id="stats"
+    class="stats">
+</div>
+
+
+<!-- =========================
+     MEMORY LIST
+========================= -->
+
+<section
+    id="memoryGrid"
+    class="memory-grid">
+</section>
+
+
+<!-- EMPTY -->
+
+<section
+    id="empty"
+    class="empty">
+
+    <div class="empty-icon">
+        📷
+    </div>
+
+    <h2>
+        Chưa có kỷ niệm
+    </h2>
+
+    <p>
+        Hãy tạo kỷ niệm đầu tiên của bạn.
+    </p>
+
+    <button
+        class="add-btn"
+        onclick="openCreate()">
+
+        ＋ Tạo kỷ niệm
+
+    </button>
+
+</section>
+
+</main>
+
+
+<!-- =========================
+     CREATE / EDIT MODAL
+========================= -->
+
+<div
+    id="memoryModal"
+    class="modal-background">
+
+    <div class="modal">
+
+        <div class="modal-head">
+
+            <div>
+
+                <small
+                    style="color:var(--primary);font-weight:bold;">
+                    MEMORY
+                </small>
+
+                <h2 id="modalTitle">
+                    Tạo kỷ niệm
+                </h2>
+
+            </div>
+
+            <button
+                class="close"
+                onclick="closeModal()">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <input
+            id="editId"
+            type="hidden"
+        >
+
+
+        <label>
+            Tiêu đề *
+        </label>
+
+        <input
+            id="title"
+            maxlength="100"
+            placeholder="Ví dụ: Một ngày thật vui..."
+        >
+
+
+        <div class="two-columns">
+
+            <div>
+
+                <label>
+                    Ngày *
+                </label>
+
+                <input
+                    id="date"
+                    type="date"
+                >
+
+            </div>
+
+            <div>
+
+                <label>
+                    Địa điểm
+                </label>
+
+                <input
+                    id="location"
+                    placeholder="Ví dụ: Đà Lạt..."
+                >
+
+            </div>
+
+        </div>
+
+
+        <label>
+            Nhật ký
+        </label>
+
+        <textarea
+            id="description"
+            rows="7"
+            maxlength="10000"
+            placeholder="Viết lại câu chuyện của ngày hôm nay...">
+        </textarea>
+
+
+        <label>
+            Hashtag
+        </label>
+
+        <input
+            id="tags"
+            placeholder="bạn bè, gia đình, du lịch"
+        >
+
+
+        <label>
+            Ảnh / Video
+        </label>
+
+        <input
+            id="media"
+            type="file"
+            accept="image/*,video/*"
+            multiple
+        >
+
+        <div
+            id="filePreview"
+            class="file-preview">
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button
+                class="cancel"
+                onclick="closeModal()">
+
+                Hủy
+
+            </button>
+
+            <button
+                class="save"
+                onclick="saveMemory()">
+
+                Lưu kỷ niệm
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     DETAIL MODAL
+========================= -->
+
+<div
+    id="detailModal"
+    class="modal-background">
+
+    <div class="modal">
+
+        <div class="modal-head">
+
+            <h2>
+                Kỷ niệm
+            </h2>
+
+            <button
+                class="close"
+                onclick="closeDetail()">
+
+                ×
+
+            </button>
+
+        </div>
+
+        <div
+            id="detailContent"
+            class="detail-content">
+        </div>
+
+    </div>
+
+</div>
+
+
+<div id="toast-container"></div>
+
+
+<script>
+
+/* ==========================================
+   DATABASE LOCAL
+========================================== */
+
+let memories =
+    JSON.parse(
+        localStorage.getItem("myMemories") || "[]"
+    );
+
+
+let currentFiles = [];
+
+
+/* ==========================================
+   LƯU DATABASE
+========================================== */
+
+function saveDatabase() {
+
+    localStorage.setItem(
+        "myMemories",
+        JSON.stringify(memories)
+    );
+
+}
+
+
+/* ==========================================
+   TẠO ID
+========================================== */
+
+function createId() {
+
+    return Date.now() +
+        Math.random()
+            .toString(36)
+            .substring(2);
+
+}
+
+
+/* ==========================================
+   FORMAT DATE
+========================================== */
+
+function formatDate(date) {
+
+    if (!date) return "";
+
+    const d =
+        new Date(date + "T00:00:00");
+
+    return d.toLocaleDateString(
+        "vi-VN",
+        {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+/* ==========================================
+   ESCAPE HTML
+========================================== */
+
+function escapeHTML(text) {
+
+    return String(text || "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+/* ==========================================
+   TOAST
+========================================== */
+
+function toast(message) {
+
+    const container =
+        document.getElementById(
+            "toast-container"
+        );
+
+    const item =
+        document.createElement("div");
+
+    item.className = "toast";
+
+    item.textContent = message;
+
+    container.appendChild(item);
+
+    setTimeout(() => {
+
+        item.remove();
+
+    }, 2500);
+
+}
+
+
+/* ==========================================
+   OPEN CREATE
+========================================== */
+
+function openCreate() {
+
+    document.getElementById("editId").value = "";
+
+    document.getElementById("modalTitle")
+        .textContent = "Tạo kỷ niệm";
+
+    document.getElementById("title").value = "";
+
+    document.getElementById("location").value = "";
+
+    document.getElementById("description").value = "";
+
+    document.getElementById("tags").value = "";
+
+    document.getElementById("media").value = "";
+
+    document.getElementById("filePreview").innerHTML = "";
+
+    currentFiles = [];
+
+    document.getElementById("date").value =
+        new Date().toISOString().slice(0,10);
+
+    document
+        .getElementById("memoryModal")
+        .classList.add("show");
+
+}
+
+
+/* ==========================================
+   CLOSE MODAL
+========================================== */
+
+function closeModal() {
+
+    document
+        .getElementById("memoryModal")
+        .classList.remove("show");
+
+}
+
+
+/* ==========================================
+   MEDIA SELECT
+========================================== */
+
+document
+    .getElementById("media")
+    .addEventListener(
+        "change",
+        function(event) {
+
+            currentFiles =
+                Array.from(
+                    event.target.files
+                );
+
+            const preview =
+                document.getElementById(
+                    "filePreview"
+                );
+
+            preview.innerHTML = "";
+
+            currentFiles.forEach(
+                file => {
+
+                    const url =
+                        URL.createObjectURL(
+                            file
+                        );
+
+                    if (
+                        file.type.startsWith(
+                            "image/"
+                        )
+                    ) {
+
+                        const img =
+                            document.createElement(
+                                "img"
+                            );
+
+                        img.src = url;
+
+                        img.className =
+                            "preview";
+
+                        preview.appendChild(img);
+
+                    } else {
+
+                        const video =
+                            document.createElement(
+                                "video"
+                            );
+
+                        video.src = url;
+
+                        video.className =
+                            "preview";
+
+                        video.controls = true;
+
+                        preview.appendChild(video);
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+/* ==========================================
+   FILE → BASE64
+========================================== */
+
+function fileToBase64(file) {
+
+    return new Promise(
+        (resolve,reject) => {
+
+            const reader =
+                new FileReader();
+
+            reader.onload =
+                () => resolve(
+                    reader.result
+                );
+
+            reader.onerror =
+                reject;
+
+            reader.readAsDataURL(file);
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   SAVE MEMORY
+========================================== */
+
+async function saveMemory() {
+
+    const title =
+        document.getElementById(
+            "title"
+        ).value.trim();
+
+    const date =
+        document.getElementById(
+            "date"
+        ).value;
+
+    const location =
+        document.getElementById(
+            "location"
+        ).value.trim();
+
+    const description =
+        document.getElementById(
+            "description"
+        ).value.trim();
+
+    const tags =
+        document.getElementById(
+            "tags"
+        ).value
+        .split(",")
+        .map(x => x.trim())
+        .filter(Boolean);
+
+    if (!title) {
+
+        toast("Bạn chưa nhập tiêu đề.");
+
+        return;
+
+    }
+
+    if (!date) {
+
+        toast("Bạn chưa chọn ngày.");
+
+        return;
+
+    }
+
+
+    const editId =
+        document.getElementById(
+            "editId"
+        ).value;
+
+
+    /* EDIT */
+
+    if (editId) {
+
+        const memory =
+            memories.find(
+                x => x.id == editId
+            );
+
+        memory.title = title;
+
+        memory.date = date;
+
+        memory.location = location;
+
+        memory.description =
+            description;
+
+        memory.tags = tags;
+
+
+        saveDatabase();
+
+        closeModal();
+
+        renderMemories();
+
+        toast("Đã cập nhật kỷ niệm.");
+
+        return;
+
+    }
+
+
+    /* CREATE */
+
+    const media = [];
+
+
+    for (const file of currentFiles) {
+
+        if (
+            file.size >
+            20 * 1024 * 1024
+        ) {
+
+            toast(
+                "Ảnh/video quá lớn. Hãy chọn file dưới 20MB."
+            );
+
+            return;
+
+        }
+
+        const base64 =
+            await fileToBase64(file);
+
+        media.push({
+
+            id: createId(),
+
+            name: file.name,
+
+            type: file.type,
+
+            data: base64
+
+        });
+
+    }
+
+
+    const memory = {
+
+        id: createId(),
+
+        title,
+
+        date,
+
+        location,
+
+        description,
+
+        tags,
+
+        favorite: false,
+
+        media,
+
+        createdAt:
+            new Date().toISOString()
+
+    };
+
+
+    memories.push(memory);
+
+    saveDatabase();
+
+    closeModal();
+
+    renderMemories();
+
+    toast("❤️ Đã lưu kỷ niệm!");
+
+}
+
+
+/* ==========================================
+   RENDER
+========================================== */
+
+function renderMemories() {
+
+    const grid =
+        document.getElementById(
+            "memoryGrid"
+        );
+
+    const empty =
+        document.getElementById(
+            "empty"
+        );
+
+    const search =
+        document.getElementById(
+            "search"
+        ).value
+        .toLowerCase()
+        .trim();
+
+
+    let list =
+        memories.filter(memory => {
+
+            const text =
+                [
+                    memory.title,
+                    memory.description,
+                    memory.location,
+                    ...(memory.tags || [])
+                ]
+                .join(" ")
+                .toLowerCase();
+
+            return text.includes(search);
+
+        });
+
+
+    const sort =
+        document.getElementById(
+            "sort"
+        ).value;
+
+
+    list.sort(
+        (a,b) => {
+
+            if (sort === "old") {
+
+                return a.date.localeCompare(
+                    b.date
+                );
+
+            }
+
+            return b.date.localeCompare(
+                a.date
+            );
+
+        }
+    );
+
+
+    /* STATS */
+
+    const mediaCount =
+        memories.reduce(
+            (total,memory) =>
+                total +
+                (memory.media?.length || 0),
+            0
+        );
+
+
+    document.getElementById(
+        "stats"
+    ).innerHTML = `
+
+        <div class="stat">
+            <b>${memories.length}</b>
+            kỷ niệm
+        </div>
+
+        <div class="stat">
+            <b>${mediaCount}</b>
+            ảnh / video
+        </div>
+
+        <div class="stat">
+            <b>
+                ${
+                    memories.filter(
+                        x => x.favorite
+                    ).length
+                }
+            </b>
+            yêu thích ❤️
+        </div>
+
+    `;
+
+
+    /* EMPTY */
+
+    if (list.length === 0) {
+
+        grid.innerHTML = "";
+
+        empty.style.display = "block";
+
+        return;
+
+    }
+
+    empty.style.display = "none";
+
+
+    /* CARDS */
+
+    grid.innerHTML =
+        list.map(memory => {
+
+            let mediaHTML =
+                `<div class="no-media">✦</div>`;
+
+
+            if (
+                memory.media &&
+                memory.media.length
+            ) {
+
+                const first =
+                    memory.media[0];
+
+                if (
+                    first.type.startsWith(
+                        "image/"
+                    )
+                ) {
+
+                    mediaHTML = `
+                        <img
+                            src="${first.data}"
+                            alt=""
+                        >
+                    `;
+
+                } else {
+
+                    mediaHTML = `
+                        <video
+                            src="${first.data}"
+                            muted
+                        ></video>
+                    `;
+
+                }
+
+            }
+
+
+            const tags =
+                (memory.tags || [])
+                .slice(0,5)
+                .map(
+                    tag =>
+                    `<span class="tag">
+                        #${escapeHTML(tag)}
+                    </span>`
+                )
+                .join("");
+
+
+            return `
+
+            <article class="memory">
+
+                <div
+                    class="memory-media"
+                    onclick="openDetail('${memory.id}')"
+                    style="cursor:pointer"
+                >
+
+                    ${mediaHTML}
+
+                    <span class="date">
+                        ${formatDate(memory.date)}
+                    </span>
+
+                </div>
+
+
+                <div class="memory-body">
+
+                    <h2>
+                        ${escapeHTML(memory.title)}
+                        ${memory.favorite ? " ❤️" : ""}
+                    </h2>
+
+                    ${
+                        memory.location
+                        ?
+                        `<div class="location">
+                            📍 ${escapeHTML(memory.location)}
+                        </div>`
+                        :
+                        ""
+                    }
+
+
+                    <p>
+                        ${
+                            escapeHTML(
+                                memory.description ||
+                                "Không có nội dung nhật ký."
+                            )
+                        }
+                    </p>
+
+
+                    <div class="tags">
+                        ${tags}
+                    </div>
+
+
+                    <div class="memory-footer">
+
+                        <span>
+                            ${
+                                memory.media?.length
+                                ?
+                                `📎 ${memory.media.length}`
+                                :
+                                "📝 Nhật ký"
+                            }
+                        </span>
+
+
+                        <div class="actions">
+
+                            <button
+                                class="action"
+                                onclick="toggleFavorite('${memory.id}')"
+                            >
+                                ${
+                                    memory.favorite
+                                    ? "💔"
+                                    : "❤️"
+                                }
+                            </button>
+
+                            <button
+                                class="action"
+                                onclick="editMemory('${memory.id}')"
+                            >
+                                Sửa
+                            </button>
+
+                            <button
+                                class="action delete"
+                                onclick="deleteMemory('${memory.id}')"
+                            >
+                                Xóa
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+            `;
+
+        })
+        .join("");
+
+}
+
+
+/* ==========================================
+   DETAIL
+========================================== */
+
+function openDetail(id) {
+
+    const memory =
+        memories.find(
+            x => x.id == id
+        );
+
+    if (!memory) return;
+
+
+    let gallery = "";
+
+
+    (memory.media || [])
+        .forEach(media => {
+
+            if (
+                media.type.startsWith(
+                    "image/"
+                )
+            ) {
+
+                gallery += `
+                    <img
+                        src="${media.data}"
+                        alt=""
+                    >
+                `;
+
+            } else {
+
+                gallery += `
+                    <video
+                        controls
+                        src="${media.data}"
+                    ></video>
+                `;
+
+            }
+
+        });
+
+
+    document.getElementById(
+        "detailContent"
+    ).innerHTML = `
+
+        <div class="detail-content">
+
+            <h1>
+                ${escapeHTML(memory.title)}
+                ${memory.favorite ? " ❤️" : ""}
+            </h1>
+
+            <div class="detail-meta">
+
+                📅 ${formatDate(memory.date)}
+
+                ${
+                    memory.location
+                    ?
+                    `　📍 ${escapeHTML(memory.location)}`
+                    :
+                    ""
+                }
+
+            </div>
+
+
+            <div class="detail-text">
+
+                ${
+                    escapeHTML(
+                        memory.description ||
+                        "Không có nội dung."
+                    )
+                }
+
+            </div>
+
+
+            <div class="tags">
+
+                ${
+                    (memory.tags || [])
+                    .map(
+                        tag =>
+                        `<span class="tag">
+                            #${escapeHTML(tag)}
+                        </span>`
+                    )
+                    .join("")
+                }
+
+            </div>
+
+
+            <br>
+
+
+            <div class="detail-gallery">
+
+                ${gallery}
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    document.getElementById(
+        "detailModal"
+    ).classList.add("show");
+
+}
+
+
+/* ==========================================
+   CLOSE DETAIL
+========================================== */
+
+function closeDetail() {
+
+    document.getElementById(
+        "detailModal"
+    ).classList.remove("show");
+
+}
+
+
+/* ==========================================
+   DELETE
+========================================== */
+
+function deleteMemory(id) {
+
+    const memory =
+        memories.find(
+            x => x.id == id
+        );
+
+    if (!memory) return;
+
+
+    if (
+        !confirm(
+            `Bạn có chắc muốn xóa "${memory.title}"?`
+        )
+    ) return;
+
+
+    memories =
+        memories.filter(
+            x => x.id != id
+        );
+
+
+    saveDatabase();
+
+    renderMemories();
+
+    toast("Đã xóa kỷ niệm.");
+
+}
+
+
+/* ==========================================
+   FAVORITE
+========================================== */
+
+function toggleFavorite(id) {
+
+    const memory =
+        memories.find(
+            x => x.id == id
+        );
+
+    if (!memory) return;
+
+    memory.favorite =
+        !memory.favorite;
+
+    saveDatabase();
+
+    renderMemories();
+
+}
+
+
+/* ==========================================
+   EDIT
+========================================== */
+
+function editMemory(id) {
+
+    const memory =
+        memories.find(
+            x => x.id == id
+        );
+
+    if (!memory) return;
+
+
+    document.getElementById(
+        "editId"
+    ).value = memory.id;
+
+    document.getElementById(
+        "modalTitle"
+    ).textContent =
+        "Chỉnh sửa kỷ niệm";
+
+
+    document.getElementById(
+        "title"
+    ).value =
+        memory.title;
+
+
+    document.getElementById(
+        "date"
+    ).value =
+        memory.date;
+
+
+    document.getElementById(
+        "location"
+    ).value =
+        memory.location || "";
+
+
+    document.getElementById(
+        "description"
+    ).value =
+        memory.description || "";
+
+
+    document.getElementById(
+        "tags"
+    ).value =
+        (memory.tags || []).join(", ");
+
+
+    currentFiles = [];
+
+
+    document.getElementById(
+        "memoryModal"
+    ).classList.add("show");
+
+}
+
+
+/* ==========================================
+   DARK MODE
+========================================== */
+
+function toggleDarkMode() {
+
+    document.body.classList.toggle(
+        "dark"
+    );
+
+    localStorage.setItem(
+        "darkMode",
+        document.body.classList.contains(
+            "dark"
+        )
+    );
+
+}
+
+
+/* LOAD DARK MODE */
+
+if (
+    localStorage.getItem(
+        "darkMode"
+    ) === "true"
+) {
+
+    document.body.classList.add(
+        "dark"
+    );
+
+}
+
+
+/* ==========================================
+   EXPORT DATA
+========================================== */
+
+function exportData() {
+
+    const data =
+        JSON.stringify(
+            memories,
+            null,
+            2
+        );
+
+
+    const blob =
+        new Blob(
+            [data],
+            {
+                type:
+                    "application/json"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const a =
+        document.createElement(
+            "a"
+        );
+
+    a.href = url;
+
+    a.download =
+        "my-memories-backup.json";
+
+    a.click();
+
+    URL.revokeObjectURL(url);
+
+    toast(
+        "Đã tạo file sao lưu."
+    );
+
+}
+
+
+/* ==========================================
+   IMPORT DATA
+========================================== */
+
+function importData(event) {
+
+    const file =
+        event.target.files[0];
+
+    if (!file) return;
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload =
+        function(e) {
+
+            try {
+
+                const data =
+                    JSON.parse(
+                        e.target.result
+                    );
+
+
+                if (
+                    !Array.isArray(data)
+                ) {
+
+                    throw new Error();
+
+                }
+
+
+                memories = data;
+
+                saveDatabase();
+
+                renderMemories();
+
+                toast(
+                    "Đã khôi phục dữ liệu."
+                );
+
+            }
+
+            catch {
+
+                toast(
+                    "File sao lưu không hợp lệ."
+                );
+
+            }
+
+        };
+
+
+    reader.readAsText(file);
+
+}
+
+
+/* ==========================================
+   CLICK OUTSIDE MODAL
+========================================== */
+
+document
+    .getElementById(
+        "memoryModal"
+    )
+    .addEventListener(
+        "click",
+        function(e) {
+
+            if (
+                e.target === this
+            ) {
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+
+document
+    .getElementById(
+        "detailModal"
+    )
+    .addEventListener(
+        "click",
+        function(e) {
+
+            if (
+                e.target === this
+            ) {
+
+                closeDetail();
+
+            }
+
+        }
+    );
+
+
+/* ==========================================
+   START
+========================================== */
+
+renderMemories();
+
+</script>
+
+</body>
+  </html>
